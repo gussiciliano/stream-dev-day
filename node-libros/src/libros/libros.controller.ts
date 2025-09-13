@@ -1,34 +1,33 @@
-import { Controller, Get, Post, Put, Delete, Body, Param } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Put, Delete } from '@nestjs/common';
 import { LibrosService } from './libros.service';
-import { Libro } from './schemas/libro.schema';
+import { CreateLibroDto } from './dto/create-libro.dto';
 
 @Controller('libros')
 export class LibrosController {
   constructor(private readonly librosService: LibrosService) {}
 
   @Get()
-  async findAll(): Promise<Libro[]> {
-    return await this.librosService.findAll();
-  }
-
-  @Get(':id')
-  async findOne(@Param('id') id: string): Promise<Libro | null> {
-    return await this.librosService.findOne(id);
+  findAll() {
+    return this.librosService.findAll();
   }
 
   @Post()
-  async create(@Body() data: Partial<Libro>): Promise<Libro> {
-    return await this.librosService.create(data);
+  create(@Body() createLibroDto: CreateLibroDto) {
+    return this.librosService.create(createLibroDto);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.librosService.findOne(id);
   }
 
   @Put(':id')
-  async update(@Param('id') id: string, @Body() data: Partial<Libro>): Promise<Libro | null> {
-    return await this.librosService.update(id, data);
+  update(@Param('id') id: string, @Body() updateLibroDto: CreateLibroDto) {
+    return this.librosService.update(id, updateLibroDto);
   }
 
   @Delete(':id')
-  async delete(@Param('id') id: string): Promise<{ deleted: boolean }> {
-    const result = await this.librosService.delete(id);
-    return { deleted: !!result };
+  remove(@Param('id') id: string) {
+    return this.librosService.remove(id);
   }
 }

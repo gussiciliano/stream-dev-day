@@ -21,20 +21,20 @@ let LibrosService = class LibrosService {
     constructor(libroModel) {
         this.libroModel = libroModel;
     }
-    async findAll() {
+    findAll() {
         return this.libroModel.find().exec();
     }
-    async findOne(id) {
-        return this.libroModel.findById(id).exec();
-    }
-    async create(data) {
-        const libro = new this.libroModel(data);
+    create(createLibroDto) {
+        const libro = new this.libroModel(createLibroDto);
         return libro.save();
     }
-    async update(id, data) {
-        return this.libroModel.findByIdAndUpdate(id, data, { new: true }).exec();
+    findOne(id) {
+        return this.libroModel.findById(id).exec();
     }
-    async delete(id) {
+    update(id, updateLibroDto) {
+        return this.libroModel.findByIdAndUpdate(id, updateLibroDto, { new: true }).exec();
+    }
+    remove(id) {
         return this.libroModel.findByIdAndDelete(id).exec();
     }
 };

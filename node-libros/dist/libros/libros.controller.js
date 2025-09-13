@@ -15,25 +15,25 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.LibrosController = void 0;
 const common_1 = require("@nestjs/common");
 const libros_service_1 = require("./libros.service");
+const create_libro_dto_1 = require("./dto/create-libro.dto");
 let LibrosController = class LibrosController {
     constructor(librosService) {
         this.librosService = librosService;
     }
-    async findAll() {
-        return await this.librosService.findAll();
+    findAll() {
+        return this.librosService.findAll();
     }
-    async findOne(id) {
-        return await this.librosService.findOne(id);
+    create(createLibroDto) {
+        return this.librosService.create(createLibroDto);
     }
-    async create(data) {
-        return await this.librosService.create(data);
+    findOne(id) {
+        return this.librosService.findOne(id);
     }
-    async update(id, data) {
-        return await this.librosService.update(id, data);
+    update(id, updateLibroDto) {
+        return this.librosService.update(id, updateLibroDto);
     }
-    async delete(id) {
-        const result = await this.librosService.delete(id);
-        return { deleted: !!result };
+    remove(id) {
+        return this.librosService.remove(id);
     }
 };
 exports.LibrosController = LibrosController;
@@ -41,37 +41,37 @@ __decorate([
     (0, common_1.Get)(),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], LibrosController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Post)(),
+    __param(0, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [create_libro_dto_1.CreateLibroDto]),
+    __metadata("design:returntype", void 0)
+], LibrosController.prototype, "create", null);
 __decorate([
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:returntype", void 0)
 ], LibrosController.prototype, "findOne", null);
-__decorate([
-    (0, common_1.Post)(),
-    __param(0, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object]),
-    __metadata("design:returntype", Promise)
-], LibrosController.prototype, "create", null);
 __decorate([
     (0, common_1.Put)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Object]),
-    __metadata("design:returntype", Promise)
+    __metadata("design:paramtypes", [String, create_libro_dto_1.CreateLibroDto]),
+    __metadata("design:returntype", void 0)
 ], LibrosController.prototype, "update", null);
 __decorate([
     (0, common_1.Delete)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
-    __metadata("design:returntype", Promise)
-], LibrosController.prototype, "delete", null);
+    __metadata("design:returntype", void 0)
+], LibrosController.prototype, "remove", null);
 exports.LibrosController = LibrosController = __decorate([
     (0, common_1.Controller)('libros'),
     __metadata("design:paramtypes", [libros_service_1.LibrosService])
