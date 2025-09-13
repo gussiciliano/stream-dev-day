@@ -1,0 +1,38 @@
+services:
+  api:
+    build: ./back
+    ports:
+      - "8080:8080"
+    container_name: go-api
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - DB_NAME=librosdb
+    depends_on:
+      - postgres
+
+  front:
+    build: ./front
+    ports:
+      - "3000:80"
+    container_name: react-front
+    depends_on:
+      - api
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: go-postgres
+    environment:
+      POSTGRES_DB: librosdb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  pgdata:

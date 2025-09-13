@@ -1,0 +1,1 @@
+Backend Go project files should be moved here.
